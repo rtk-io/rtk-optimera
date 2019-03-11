@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Optimera Test Page</title>
+		<script type="text/javascript">
+
+		/* When using the the RTKOptimeraLoader You can subscribe to 
+		this event listener to know when either 
+			1) optimer timed out or 
+			2) optimera returned and RTK targetting keys have been set
+		look in e.detail.timedout for true/false 
+		
+		If you want to delay sending your headerbidding results to DFP
+		prior to receiving Optimera results this is will be useful. 
+		
+		*/
+
+		document.addEventListener('OptimeraReady', function (e) {
+			if (e.detail.timedout) {
+				console.log("Optimera is ready, but we didn't get the score file in time")
+			} else {
+				console.log("Optimera is ready and score file received within our timeout")
+			}
+		}, false);
+		</script>
+
+
+		<script src="optimera-rtk.js" type="application/javascript"></script>
+
+		<script>
+		// Location to client specific optimera score file
+		var optimeraScoreFile = 'https://s3.amazonaws.com/elasticbeanstalk-us-east-1-397719490216/json/RtkIntegration.html.js';
+		//Set Client ID, then ad divs on page
+		var oDv = ["0", "div-0", "div-1", "div-2"];
+		//Set inbound score array to NULL incase scorefile does not return
+		var oVa = { "div-0": ["NULL"], "div-1": ["NULL"], "div-2": ["NULL"] };
+		RTKOptimeraLoader.load(optimeraScoreFile, null, oDv, oVa, 2000);
+
+		</script>
+		<!-- Prebid or header bidding library comes after here-->
+
+	</head>
+
+	<body>
+		This is a test page
+		<!-- Test_Site -->
+		<hr />
+		<div id='div-0'>
+		</div>
+		<hr />
+		test<br />
+		test<br />
+		test<br />
+		<hr />
+		<div id='div-1'>
+		</script>
+		</div>
+		<hr />
+		test<br />
+		test<br />
+		test<br />
+		<hr />
+		<div id='div-2'>
+		</div>
+	</body>
+</html>
